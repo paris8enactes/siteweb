@@ -1,0 +1,40 @@
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background-color: #eee;
+}
+.montserrat-normal {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.bg-red {
+    /*background: linear-gradient(#a81919, #800000) !important;*/
+    /*background: linear-gradient(#a81919, #800000) !important;*/
+    background-color: #a81919 !important;
+}
+.text-yellow {
+    color: #f1c40f !important;
+}
+.bar-gold {
+    background-color: #DBA842;
+}
+.nav-link {
+    color: black;
+}
+main {
+    flex: 1; /* Ensures main content fills available space */
+}
+
+header, footer {
+    background: linear-gradient(90deg, #712a68, #a02a4f, #d1302a, #6c1e22);
+    color: white; /* Ensures text contrast */
+}
