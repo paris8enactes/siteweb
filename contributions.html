@@ -11,42 +11,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .citation {
-            font-style: italic;
+        .card {
+            border-radius: 8px;
             background-color: #f9f9f9;
-            border-left: 4px solid #d9534f;
-            padding: 10px 15px;
-            margin: 15px 0;
-            border-radius: 5px;
+            border: 1px solid #ddd;
         }
 
-        .citation .author {
-            font-weight: bold;
-            margin-top: 10px;
-            text-align: right;
+        .blockquote {
+            font-style: italic;
             color: #555;
         }
+
+        .blockquote-footer {
+            color: #888;
+            font-size: 0.9em;
+        }
+
 
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Charger le CSV
         fetch("messages.csv")
             .then(response => response.text())
             .then(csvText => {
                 const data = Papa.parse(csvText, { header: true }).data;
                 const messagesContainer = document.getElementById("messagesContainer");
 
-                // Ajouter chaque message sous forme de citation
+                // Générer les blocs pour chaque message
                 data.forEach(row => {
                     const col = document.createElement("div");
-                    col.classList.add("col-md-4", "mb-4");
+                    col.classList.add("col-12", "mb-4");
 
                     col.innerHTML = `
-                        <div class="citation">
-                            <p>${row.Message}</p>
-                            <p class="author">- ${row.Nom}</p>
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                    <p>${row.Message}</p>
+                                    <footer class="blockquote-footer mt-3">${row.Nom}</footer>
+                                </blockquote>
+                            </div>
                         </div>
                     `;
                     messagesContainer.appendChild(col);
@@ -54,6 +58,7 @@
             });
     });
     </script>
+
 
 </head>
 <body class="poppins-regular">
