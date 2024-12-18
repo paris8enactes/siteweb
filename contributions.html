@@ -33,12 +33,13 @@
         }
 
         .read-more-btn {
-            margin-top: 10px;
             font-size: 0.85rem;
             font-weight: bold;
             color: #d9534f; /* Red button color */
+            cursor: pointer;
+            border: none;
+            background: none;
         }
-
 
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -70,7 +71,7 @@
                             <p class="message-content">${short}</p>
                             ${
                                 full !== short
-                                    ? `<button class="btn btn-sm btn-outline-danger read-more-btn">Lire plus</button>`
+                                    ? `<button class="btn btn-sm btn-outline-danger read-more-btn mt-3">Lire plus</button>`
                                     : ""
                             }
                             <p class="text-end fw-bold text-darkred mt-3 author-name">– ${row.Nom}</p>
@@ -79,7 +80,7 @@
 
                     messagesContainer.appendChild(col);
 
-                    // Add "Read More" functionality
+                    // Add "Read More" functionality if the message is truncated
                     if (full !== short) {
                         const messageBox = col.querySelector(".message-box");
                         const messageContent = col.querySelector(".message-content");
@@ -101,8 +102,6 @@
             });
     });
     </script>
-
-
 
 
 </head>
