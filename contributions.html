@@ -33,6 +33,7 @@
         }
 
         .read-more-btn {
+            margin-top: 10px;
             font-size: 0.85rem;
             font-weight: bold;
             color: #d9534f; /* Red button color */
@@ -42,6 +43,7 @@
         }
 
     </style>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -55,14 +57,17 @@
                 function truncate(text) {
                     const words = text.split(" ");
                     const wordLimit = Math.floor(150 + Math.random() * 50); // Dynamic limit between 150 and 200 words
-                    return words.length > wordLimit
-                        ? { short: words.slice(0, wordLimit).join(" ") + "…", full: text }
-                        : { short: text, full: text };
+                    const isTruncated = words.length > wordLimit;
+                    return {
+                        short: isTruncated ? words.slice(0, wordLimit).join(" ") + "…" : text,
+                        full: text,
+                        isTruncated: isTruncated,
+                    };
                 }
 
                 // Generate message cards
                 data.forEach(row => {
-                    const { short, full } = truncate(row.Message);
+                    const { short, full, isTruncated } = truncate(row.Message);
                     const col = document.createElement("div");
                     col.classList.add("col-md-4", "mb-4");
 
@@ -70,7 +75,7 @@
                         <div class="message-box border-start border-danger p-3 position-relative bg-white shadow-sm rounded" style="transition: all 0.3s;">
                             <p class="message-content">${short}</p>
                             ${
-                                full !== short
+                                isTruncated
                                     ? `<button class="btn btn-sm btn-outline-danger read-more-btn mt-3">Lire plus</button>`
                                     : ""
                             }
@@ -80,8 +85,8 @@
 
                     messagesContainer.appendChild(col);
 
-                    // Add "Read More" functionality if the message is truncated
-                    if (full !== short) {
+                    // Add "Lire plus" functionality for truncated messages
+                    if (isTruncated) {
                         const messageBox = col.querySelector(".message-box");
                         const messageContent = col.querySelector(".message-content");
                         const readMoreBtn = col.querySelector(".read-more-btn");
