@@ -11,28 +11,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .bg-light {
-            background-color: #f8f9fa !important; /* Couleur douce */
+        .message-box {
+            border-left: 5px solid #d9534f; /* Red left border */
+            background-color: #fff; /* White background */
+            overflow: hidden; /* Prevent content overflow */
+            max-height: 300px; /* Initial max height */
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
-        .p-4 {
-            padding: 1.5rem; /* Espacement interne */
+        .message-box.expanded {
+            max-height: 100%; /* Expand to full height */
         }
 
-        .border {
-            border: 1px solid #ddd; /* Légère bordure */
+        .message-content {
+            color: #555; /* Neutral text color */
+            white-space: pre-line; /* Respect line breaks */
         }
 
-        .shadow-sm {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+        .author-name {
+            color: darkred; /* Dark red for author names */
         }
 
-        .text-secondary {
-            color: #6c757d; /* Couleur grise pour le nom */
-        }
-
-        p {
-            line-height: 1.6; /* Améliorer la lisibilité */
+        .read-more-btn {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            z-index: 1;
         }
 
     </style>
@@ -45,22 +49,57 @@
                 const data = Papa.parse(csvText, { header: true }).data;
                 const messagesContainer = document.getElementById("messagesContainer");
 
-                // Générer les blocs pour chaque message
-                data.forEach(row => {
-                    const div = document.createElement("div");
-                    div.classList.add("col-12", "mb-4");
+                // Helper function to truncate messages
+                function truncate(text, wordLimit) {
+                    const words = text.split(" ");
+                    return words.length > wordLimit
+                        ? { short: words.slice(0, wordLimit).join(" ") + "…", full: text }
+                        : { short: text, full: text };
+                }
 
-                    div.innerHTML = `
-                        <div class="p-4 border rounded bg-light shadow-sm">
-                            <p class="mb-3" style="white-space: pre-line;">${row.Message}</p>
-                            <p class="text-end fw-bold text-secondary">– ${row.Nom}</p>
+                // Generate message cards
+                data.forEach((row, index) => {
+                    const { short, full } = truncate(row.Message, 200);
+                    const col = document.createElement("div");
+                    col.classList.add("col-md-4", "mb-4");
+
+                    col.innerHTML = `
+                        <div class="message-box border-start border-danger p-3 position-relative bg-white shadow-sm rounded" style="transition: all 0.3s;">
+                            <p class="message-content">${short}</p>
+                            ${
+                                full !== short
+                                    ? `<button class="btn btn-sm btn-outline-danger read-more-btn">Lire plus</button>`
+                                    : ""
+                            }
+                            <p class="text-end fw-bold text-darkred mt-3 author-name">– ${row.Nom}</p>
                         </div>
                     `;
-                    messagesContainer.appendChild(div);
+
+                    messagesContainer.appendChild(col);
+
+                    // Add "Read More" functionality
+                    if (full !== short) {
+                        const messageBox = col.querySelector(".message-box");
+                        const messageContent = col.querySelector(".message-content");
+                        const readMoreBtn = col.querySelector(".read-more-btn");
+
+                        readMoreBtn.addEventListener("click", () => {
+                            if (messageBox.classList.contains("expanded")) {
+                                messageBox.classList.remove("expanded");
+                                messageContent.textContent = short;
+                                readMoreBtn.textContent = "Lire plus";
+                            } else {
+                                messageBox.classList.add("expanded");
+                                messageContent.textContent = full;
+                                readMoreBtn.textContent = "Réduire";
+                            }
+                        });
+                    }
                 });
             });
     });
     </script>
+
 
 
 </head>
