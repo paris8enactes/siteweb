@@ -10,6 +10,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Fetch and parse the CSV file
+        fetch("data.csv")
+            .then(response => response.text())
+            .then(csvText => {
+                const data = Papa.parse(csvText, { header: true }).data;
+                const tableBody = document.getElementById("tableBody");
+    
+                // Loop through the data and create rows
+                data.forEach(row => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${row["Last Name"]}</td>
+                        <td>${row["First Name"]}</td>
+                        <td>${row["Service"]}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            });
+    });
+    </script>
+    
 </head>
 <body class="poppins-regular">
 
@@ -46,16 +70,22 @@
         <section id="soutien" class="mb-5">
             <h2 class="text-center mb-4">Nos soutiens</h2>
             <p class="text-center">Contributions et témoignages des collègues soutenant la candidature d'Arnaud Laimé.</p>
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    <h5>Nom 1</h5>
-                    <p>Thème de soutien ici.</p>
+            <div class="container">
+                <div class="row">
+                    <!-- Table will display in three columns on large screens -->
+                    <table class="table table-striped table-responsive">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Service</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-md-4 text-center">
-                    <h5>Nom 2</h5>
-                    <p>Thème de soutien ici.</p>
-                </div>
-                <!-- Ajouter d'autres soutiens -->
             </div>
         </section>
 
