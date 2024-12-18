@@ -14,13 +14,13 @@
         .message-box {
             border-left: 5px solid #d9534f; /* Red left border */
             background-color: #fff; /* White background */
-            overflow: hidden; /* Prevent content overflow */
-            max-height: 300px; /* Initial max height */
+            overflow: hidden; /* Prevent overflow */
+            max-height: 300px; /* Default height */
             transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .message-box.expanded {
-            max-height: 100%; /* Expand to full height */
+            max-height: 100%; /* Allow full expansion */
         }
 
         .message-content {
@@ -33,11 +33,12 @@
         }
 
         .read-more-btn {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            z-index: 1;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #d9534f; /* Red button color */
         }
+
 
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -49,17 +50,18 @@
                 const data = Papa.parse(csvText, { header: true }).data;
                 const messagesContainer = document.getElementById("messagesContainer");
 
-                // Helper function to truncate messages
-                function truncate(text, wordLimit) {
+                // Helper function to truncate messages dynamically
+                function truncate(text) {
                     const words = text.split(" ");
+                    const wordLimit = Math.floor(150 + Math.random() * 50); // Dynamic limit between 150 and 200 words
                     return words.length > wordLimit
                         ? { short: words.slice(0, wordLimit).join(" ") + "…", full: text }
                         : { short: text, full: text };
                 }
 
                 // Generate message cards
-                data.forEach((row, index) => {
-                    const { short, full } = truncate(row.Message, 200);
+                data.forEach(row => {
+                    const { short, full } = truncate(row.Message);
                     const col = document.createElement("div");
                     col.classList.add("col-md-4", "mb-4");
 
@@ -99,6 +101,7 @@
             });
     });
     </script>
+
 
 
 
