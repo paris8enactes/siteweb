@@ -13,15 +13,10 @@
     <style>
         .message-block {
             border-left: 5px solid #d9534f; /* Red left border */
-            background-color: #f9f9f9; /* Light gray background */
+            background-color: #f9f9f9; /* Light background */
             padding: 20px;
-            max-height: 150px; /* Default collapsed height */
-            overflow: hidden; /* Hide overflowing content */
-            transition: max-height 0.5s ease, padding 0.3s ease;
-        }
-
-        .message-block.expanded {
-            overflow: hidden; /* Prevent content overflow during animation */
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .message-content {
@@ -44,6 +39,7 @@
             padding: 0;
         }
 
+
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -55,10 +51,9 @@
                 const data = Papa.parse(csvText, { header: true }).data;
                 const messagesContainer = document.getElementById("messagesContainer");
 
-                // Helper function to truncate messages dynamically
-                function truncate(text) {
+                // Helper function to truncate messages
+                function truncate(text, wordLimit) {
                     const words = text.split(" ");
-                    const wordLimit = Math.floor(100 + Math.random() * 100); // Dynamic limit between 100 and 200 words
                     const isTruncated = words.length > wordLimit;
                     return {
                         short: isTruncated ? words.slice(0, wordLimit).join(" ") + "…" : text,
@@ -69,13 +64,13 @@
 
                 // Generate message blocks
                 data.forEach(row => {
-                    const { short, full, isTruncated } = truncate(row.Message);
+                    const { short, full, isTruncated } = truncate(row.Message, 250);
                     const block = document.createElement("div");
                     block.classList.add("col-12", "mb-4");
 
                     block.innerHTML = `
-                        <div class="message-block border-start border-danger p-3 position-relative bg-light shadow-sm rounded">
-                            <p class="message-content">${short}</p>
+                        <div class="message-block border-start border-danger p-3 bg-light shadow-sm rounded">
+                            <p class="message-content">${isTruncated ? short : full}</p>
                             ${
                                 isTruncated
                                     ? `<button class="btn btn-sm btn-outline-danger read-more-btn mt-3">Lire plus</button>`
@@ -89,21 +84,16 @@
 
                     // Add "Lire plus" functionality for truncated messages
                     if (isTruncated) {
-                        const messageBlock = block.querySelector(".message-block");
                         const messageContent = block.querySelector(".message-content");
                         const readMoreBtn = block.querySelector(".read-more-btn");
 
                         readMoreBtn.addEventListener("click", () => {
-                            const fullHeight = messageContent.scrollHeight;
-
-                            if (messageBlock.classList.contains("expanded")) {
-                                messageBlock.style.maxHeight = "150px"; // Collapse to default height
-                                messageBlock.classList.remove("expanded");
-                                readMoreBtn.textContent = "Lire plus";
-                            } else {
-                                messageBlock.style.maxHeight = `${fullHeight + 50}px`; // Expand to full height
-                                messageBlock.classList.add("expanded");
+                            if (messageContent.textContent === short) {
+                                messageContent.textContent = full;
                                 readMoreBtn.textContent = "Réduire";
+                            } else {
+                                messageContent.textContent = short;
+                                readMoreBtn.textContent = "Lire plus";
                             }
                         });
                     }
@@ -111,7 +101,6 @@
             });
     });
     </script>
-
 
 
 
