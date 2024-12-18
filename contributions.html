@@ -15,12 +15,13 @@
             border-left: 5px solid #d9534f; /* Red left border */
             background-color: #f9f9f9; /* Light gray background */
             padding: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            max-height: 150px; /* Default collapsed height */
+            overflow: hidden; /* Hide overflowing content */
+            transition: max-height 0.5s ease, padding 0.3s ease;
         }
 
         .message-block.expanded {
-            max-height: none;
+            overflow: hidden; /* Prevent content overflow during animation */
         }
 
         .message-content {
@@ -73,7 +74,7 @@
                     block.classList.add("col-12", "mb-4");
 
                     block.innerHTML = `
-                        <div class="message-block p-4 border-start border-danger bg-light shadow-sm rounded">
+                        <div class="message-block border-start border-danger p-3 position-relative bg-light shadow-sm rounded">
                             <p class="message-content">${short}</p>
                             ${
                                 isTruncated
@@ -93,13 +94,15 @@
                         const readMoreBtn = block.querySelector(".read-more-btn");
 
                         readMoreBtn.addEventListener("click", () => {
+                            const fullHeight = messageContent.scrollHeight;
+
                             if (messageBlock.classList.contains("expanded")) {
+                                messageBlock.style.maxHeight = "150px"; // Collapse to default height
                                 messageBlock.classList.remove("expanded");
-                                messageContent.textContent = short;
                                 readMoreBtn.textContent = "Lire plus";
                             } else {
+                                messageBlock.style.maxHeight = `${fullHeight + 50}px`; // Expand to full height
                                 messageBlock.classList.add("expanded");
-                                messageContent.textContent = full;
                                 readMoreBtn.textContent = "Réduire";
                             }
                         });
@@ -108,6 +111,7 @@
             });
     });
     </script>
+
 
 
 
