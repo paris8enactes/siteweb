@@ -31,10 +31,34 @@ html, body {
     color: black;
 }
 main {
-    flex: 1; /* Ensures main content fills available space */
+    flex: 1; /* Ensures main content takes the remaining space */
+    display: flex;
+    flex-direction: column;
 }
 
 header, footer {
     background: linear-gradient(90deg, #712a68, #a02a4f, #d1302a, #6c1e22);
     color: white; /* Ensures text contrast */
+}
+
+footer {
+    background: linear-gradient(90deg, #712a68, #a02a4f, #d1302a, #6c1e22);
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+#profession .row {
+    align-items: flex-start; /* Align all items in the row to the top */
+}
+
+#profession .col-md-6 img {
+    margin-top: 0; /* Ensure no unnecessary top margin */
+}
+
+.harmonized-image {
+    width: 150px; /* Set a fixed width for all images */
+    height: 150px; /* Set a fixed height for all images */
+    object-fit: cover; /* Ensure images are cropped uniformly */
+    border-radius: 8px; /* Optional: Add subtle rounded corners for a cleaner look */
 }
