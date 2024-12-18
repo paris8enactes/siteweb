@@ -11,20 +11,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .message-box {
+        .message-block {
             border-left: 5px solid #d9534f; /* Red left border */
-            background-color: #fff; /* White background */
-            overflow: hidden; /* Prevent overflow */
-            max-height: 300px; /* Default height */
-            transition: max-height 0.3s ease, padding 0.3s ease;
+            background-color: #f9f9f9; /* Light gray background */
+            padding: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .message-box.expanded {
-            max-height: 100%; /* Allow full expansion */
+        .message-block.expanded {
+            max-height: none;
         }
 
         .message-content {
-            color: #555; /* Neutral text color */
+            color: #333; /* Neutral text color */
             white-space: pre-line; /* Respect line breaks */
         }
 
@@ -37,9 +37,10 @@
             font-size: 0.85rem;
             font-weight: bold;
             color: #d9534f; /* Red button color */
-            cursor: pointer;
             border: none;
             background: none;
+            cursor: pointer;
+            padding: 0;
         }
 
     </style>
@@ -56,7 +57,7 @@
                 // Helper function to truncate messages dynamically
                 function truncate(text) {
                     const words = text.split(" ");
-                    const wordLimit = Math.floor(150 + Math.random() * 50); // Dynamic limit between 150 and 200 words
+                    const wordLimit = Math.floor(100 + Math.random() * 100); // Dynamic limit between 100 and 200 words
                     const isTruncated = words.length > wordLimit;
                     return {
                         short: isTruncated ? words.slice(0, wordLimit).join(" ") + "…" : text,
@@ -65,14 +66,14 @@
                     };
                 }
 
-                // Generate message cards
+                // Generate message blocks
                 data.forEach(row => {
                     const { short, full, isTruncated } = truncate(row.Message);
-                    const col = document.createElement("div");
-                    col.classList.add("col-md-4", "mb-4");
+                    const block = document.createElement("div");
+                    block.classList.add("col-12", "mb-4");
 
-                    col.innerHTML = `
-                        <div class="message-box border-start border-danger p-3 position-relative bg-white shadow-sm rounded" style="transition: all 0.3s;">
+                    block.innerHTML = `
+                        <div class="message-block p-4 border-start border-danger bg-light shadow-sm rounded">
                             <p class="message-content">${short}</p>
                             ${
                                 isTruncated
@@ -83,21 +84,21 @@
                         </div>
                     `;
 
-                    messagesContainer.appendChild(col);
+                    messagesContainer.appendChild(block);
 
                     // Add "Lire plus" functionality for truncated messages
                     if (isTruncated) {
-                        const messageBox = col.querySelector(".message-box");
-                        const messageContent = col.querySelector(".message-content");
-                        const readMoreBtn = col.querySelector(".read-more-btn");
+                        const messageBlock = block.querySelector(".message-block");
+                        const messageContent = block.querySelector(".message-content");
+                        const readMoreBtn = block.querySelector(".read-more-btn");
 
                         readMoreBtn.addEventListener("click", () => {
-                            if (messageBox.classList.contains("expanded")) {
-                                messageBox.classList.remove("expanded");
+                            if (messageBlock.classList.contains("expanded")) {
+                                messageBlock.classList.remove("expanded");
                                 messageContent.textContent = short;
                                 readMoreBtn.textContent = "Lire plus";
                             } else {
-                                messageBox.classList.add("expanded");
+                                messageBlock.classList.add("expanded");
                                 messageContent.textContent = full;
                                 readMoreBtn.textContent = "Réduire";
                             }
@@ -107,6 +108,7 @@
             });
     });
     </script>
+
 
 
 </head>
@@ -144,7 +146,7 @@
         
         <!-- Contributions -->
         <section id="messages" class="mb-5">
-            <h2 class="text-center mb-4">Contributions personnelles et collectives</h2>
+            <h2 class="text-center mb-4">Contributions personnelles</h2>
             <div class="container">
                 <div class="row" id="messagesContainer">
                     <!-- Les messages seront insérés ici -->
