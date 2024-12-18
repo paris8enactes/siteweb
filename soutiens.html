@@ -13,14 +13,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Fetch and parse the CSV file
-        fetch("data.csv")
+        fetch("soutiens.csv")
             .then(response => response.text())
             .then(csvText => {
+                // Parse the CSV
                 const data = Papa.parse(csvText, { header: true }).data;
-                const tableBody = document.getElementById("tableBody");
     
-                // Loop through the data and create rows
+                // Trier les données par ordre alphabétique (Last Name)
+                data.sort((a, b) => a["Last Name"].localeCompare(b["Last Name"]));
+    
+                // Mettre à jour le nombre de signataires
+                document.getElementById("supportCount").textContent = 
+                    `La liste de nos ${data.length} signataires.`;
+    
+                // Remplir le tableau
+                const tableBody = document.getElementById("tableBody");
                 data.forEach(row => {
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
@@ -33,6 +40,7 @@
             });
     });
     </script>
+    
     
 </head>
 <body class="poppins-regular">
@@ -49,6 +57,7 @@
                     <li class="nav-item"><a class="nav-link" href="profession_foi.html">Profession de foi</a></li>
                     <li class="nav-item"><a class="nav-link" href="listes.html">Nos listes</a></li>
                     <li class="nav-item"><a class="nav-link" href="programme.html">Programme</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contributions.html">Contributions</a></li>
                     <li class="nav-item"><a class="nav-link" href="soutiens.html">Nos soutiens</a></li>
                     <li class="nav-item"><a class="nav-link" href="desinfox.html">Désinfox</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
@@ -69,7 +78,7 @@
         <!-- Comité de soutien -->
         <section id="soutien" class="mb-5">
             <h2 class="text-center mb-4">Nos soutiens</h2>
-            <p class="text-center">Contributions et témoignages des collègues soutenant la candidature d'Arnaud Laimé.</p>
+            <p class="text-center" id="supportCount">La liste de nos signataires.</p>
             <div class="container">
                 <div class="row">
                     <!-- Table will display in three columns on large screens -->
@@ -88,6 +97,7 @@
                 </div>
             </div>
         </section>
+        
 
         <!-- Contact -->
         <section id="contact" class="mb-5">
