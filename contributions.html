@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         .message-block {
-            border-left: 5px solid #d9534f; /* Red left border */
+            border-left: 10px solid #d9534f; /* Red left border */
             background-color: #f9f9f9; /* Light background */
-            padding: 20px;
+            padding: 30px;
             overflow: hidden;
             transition: all 0.3s ease;
         }
@@ -44,62 +44,73 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        fetch("messages.csv")
-            .then(response => response.text())
-            .then(csvText => {
-                const data = Papa.parse(csvText, { header: true }).data;
-                const messagesContainer = document.getElementById("messagesContainer");
-
-                // Helper function to truncate messages
-                function truncate(text, wordLimit) {
-                    const words = text.split(" ");
-                    const isTruncated = words.length > wordLimit;
-                    return {
-                        short: isTruncated ? words.slice(0, wordLimit).join(" ") + "…" : text,
-                        full: text,
-                        isTruncated: isTruncated,
-                    };
-                }
-
-                // Generate message blocks
-                data.forEach(row => {
-                    const { short, full, isTruncated } = truncate(row.Message, 250);
-                    const block = document.createElement("div");
-                    block.classList.add("col-12", "mb-4");
-
-                    block.innerHTML = `
-                        <div class="message-block border-start border-danger p-3 bg-light shadow-sm rounded">
-                            <p class="message-content">${isTruncated ? short : full}</p>
-                            ${
-                                isTruncated
-                                    ? `<button class="btn btn-sm btn-outline-danger read-more-btn mt-3">Lire plus</button>`
-                                    : ""
-                            }
-                            <p class="text-end fw-bold text-darkred mt-3 author-name">– ${row.Nom}</p>
-                        </div>
-                    `;
-
-                    messagesContainer.appendChild(block);
-
-                    // Add "Lire plus" functionality for truncated messages
-                    if (isTruncated) {
-                        const messageContent = block.querySelector(".message-content");
-                        const readMoreBtn = block.querySelector(".read-more-btn");
-
-                        readMoreBtn.addEventListener("click", () => {
-                            if (messageContent.textContent === short) {
-                                messageContent.textContent = full;
-                                readMoreBtn.textContent = "Réduire";
-                            } else {
-                                messageContent.textContent = short;
-                                readMoreBtn.textContent = "Lire plus";
-                            }
-                        });
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("messages.csv")
+                .then(response => response.text())
+                .then(csvText => {
+                    const data = Papa.parse(csvText, { header: true }).data;
+                    const messagesContainer = document.getElementById("messagesContainer");
+                    const contributionsIndex = document.getElementById("contributionsIndex");
+    
+                    // Helper function to truncate messages
+                    function truncate(text, wordLimit) {
+                        const words = text.split(" ");
+                        const isTruncated = words.length > wordLimit;
+                        return {
+                            short: isTruncated ? words.slice(0, wordLimit).join(" ") + "…" : text,
+                            full: text,
+                            isTruncated: isTruncated,
+                        };
                     }
+    
+                    // Generate message blocks and index
+                    data.forEach((row, index) => {
+                        const { short, full, isTruncated } = truncate(row.Message, 250);
+                        const contributionId = `contribution-${index}`;
+                        
+                        // Add to the index
+                        const listItem = document.createElement("li");
+                        listItem.classList.add("list-group-item");
+                        listItem.innerHTML = `<a href="#${contributionId}">${row.Nom || "Contribution " + (index + 1)}</a>`;
+                        contributionsIndex.appendChild(listItem);
+    
+                        // Generate contribution block
+                        const block = document.createElement("div");
+                        block.classList.add("col-12", "mb-4");
+                        block.id = contributionId;
+    
+                        block.innerHTML = `
+                            <div class="message-block border-start border-danger p-3 bg-light shadow-sm rounded">
+                                <p class="message-content">${isTruncated ? short : full}</p>
+                                ${
+                                    isTruncated
+                                        ? `<button class="btn btn-sm btn-outline-danger read-more-btn mt-3">Lire plus</button>`
+                                        : ""
+                                }
+                                <p class="text-end fw-bold text-darkred mt-3 author-name">– ${row.Nom}</p>
+                            </div>
+                        `;
+    
+                        messagesContainer.appendChild(block);
+    
+                        // Add "Lire plus" functionality for truncated messages
+                        if (isTruncated) {
+                            const messageContent = block.querySelector(".message-content");
+                            const readMoreBtn = block.querySelector(".read-more-btn");
+    
+                            readMoreBtn.addEventListener("click", () => {
+                                if (messageContent.textContent === short) {
+                                    messageContent.textContent = full;
+                                    readMoreBtn.textContent = "Réduire";
+                                } else {
+                                    messageContent.textContent = short;
+                                    readMoreBtn.textContent = "Lire plus";
+                                }
+                            });
+                        }
+                    });
                 });
-            });
-    });
+        });
     </script>
 
 
@@ -116,12 +127,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <!-- <li class="nav-item"><a class="nav-link" href="profession_foi.html">Profession de foi</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="profession_foi.html">Profession de foi</a></li>
                     <li class="nav-item"><a class="nav-link" href="listes.html">Nos listes</a></li>
                     <li class="nav-item"><a class="nav-link" href="programme.html">Programme</a></li>
                     <li class="nav-item"><a class="nav-link" href="contributions.html">Contributions</a></li>
                     <li class="nav-item"><a class="nav-link" href="soutiens.html">Nos soutiens</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link" href="desinfox.html">Désinfox</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="desinfox.html">Désinfox</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -140,6 +151,10 @@
         <!-- Contributions -->
         <section id="messages" class="mb-5">
             <h2 class="text-center mb-4">Contributions personnelles</h2>
+
+            <!-- Index of Contributions -->
+            <ul id="contributionsIndex" class="list-group mb-4"></ul>
+
             <div class="container">
                 <div class="row" id="messagesContainer">
                     <!-- Les messages seront insérés ici -->
