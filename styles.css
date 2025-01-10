@@ -24,6 +24,11 @@ html, body {
 .text-yellow {
     color: #f1c40f !important;
 }
+
+.label_axe {
+    color: #6c1e22;
+}
+
 .bar-gold {
     background-color: #DBA842;
 }
@@ -64,5 +69,12 @@ footer {
     border-radius: 8px; /* Optional: Adds rounded corners */
 }
 
-
+@media (max-width: 768px) {
+    #introduction .row {
+        flex-direction: column-reverse;
+    }
+    #introduction img {
+        margin-top: 1rem;
+    }
+}
 
