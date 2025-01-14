@@ -39,6 +39,12 @@
             padding: 0;
         }
 
+        .txt-grad {
+            background: linear-gradient(90deg, #712a68, #a02a4f, #d1302a, #6c1e22);
+            -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           font-weight: bold;
+        }
 
     </style>
 
@@ -87,7 +93,7 @@
                                         ? `<button class="btn btn-sm btn-outline-danger read-more-btn mt-3">Lire plus</button>`
                                         : ""
                                 }
-                                <p class="text-end fw-bold text-darkred mt-3 author-name">– ${row.Nom}</p>
+                                <p class="text-end fw-bold text-darkred mt-3 author-name txt-grad">– ${row.Nom}</p>
                             </div>
                         `;
     
