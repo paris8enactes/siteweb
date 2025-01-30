@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paris 8 en actes. Avec Arnaud Laimé</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+   <style>
+        .poppins-regular {
+           font-family: "Poppins", sans-serif;
+           font-weight: 400;
+           font-style: normal;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to bottom, #FE0001, #BF00FA);
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .top-banner {
+            height: 3%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            padding: 10px;
+        }
+        .container {
+            display: flex;
+            flex: 1;
+            flex-wrap: wrap;
+            min-width: 0;
+        }
+        .left-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            min-width: 0;
+        }
+        .top-block {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 3em;
+            font-weight: bold;
+            text-align: left;
+            padding: 40px;
+            min-width: 0;
+        }
+        .bottom-block {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 2px dotted white;
+            min-width: 0;
+        }
+        .bottom-block .subsection {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .right-section .subsection, .bottom-subsection {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            border: 2px dotted white;
+            margin: 5px;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .right-section {
+            width: 15%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+        }
+        @media (max-width: 768px) {
+            .right-section, .bottom-section {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background: #BF00FA;
+            }
+            .right-section .subsection, .bottom-subsection {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+        .bottom-section {
+            height: 15%;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px dotted white;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .bar-gold {
+           background-color: #DBA842;
+        }
+    </style>
+</head>
+<body class="poppins-regular">
+
+    <div class="top-banner bar-gold">
+        <span style="color:brown;"><a href="https://paris8enactes.fr/" style="color: brown;">Paris 8 en actes</a></span>
+    </div>
+
+    <div class="container">
+        <div class="left-section">
+            <div class="top-block">Pour une université engagée, émancipatrice & solidaire !</div>
+            <div class="bottom-block">
+                <div class="subsection" style="border: none; background: none;">Réunion publique</div>
+                <div class="subsection" style="border: none; background: none;">Mardi 4 février 2025<br>13h-15h, La Coupole<br>(Maison de l’Étudiant)</div>
+            </div>
+            <div class="footer"><a href="https://paris8enactes.fr/" style="color: white;">Paris 8 en actes <br> Avec Arnaud Laimé</a></div>
+        </div>
+        <div class="right-section">
+            <div class="subsection">Vision de l'ESR. Enjeux</div>
+            <div class="subsection">Nos actions</div>
+            <div class="subsection">Nos propositions</div>
+        </div>
+    </div>
+    <div class="bottom-section">
+        <div class="bottom-subsection">Nos contributions</div>
+        <div class="bottom-subsection">Nos soutiens</div>
+        <div class="bottom-subsection">Nos listes</div>
+    </div>
+</body>
+</html>
