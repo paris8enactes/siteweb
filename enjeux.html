@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paris 8 en actes - Arnaud Laimé</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+        .clickable-div {
+            width: 45%;
+            padding: 20px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 2em;
+            background-color: #f8f9fa;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            
+        }
+
+        .clickable-div:hover {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body class="poppins-regular">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top bar-gold">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><span style="color:brown;">Paris 8 en actes</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="listes.html">Nos listes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="programme.html">Programme</a></li>
+                    <li class="nav-item"><a class="nav-link" href="actions.html">60 actions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="enjeux.html">Enjeux transversaux</a></li>
+                    <li class="nav-item"><a class="nav-link" href="soutiens.html">Nos soutiens</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contributions.html">Contributions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-red text-white text-center py-4" onclick="window.location='index.html'" style="cursor: pointer;">
+        <h1 class="mb-2">Paris 8 en actes</h1>
+        <h2 class="mb-0">Avec Arnaud Laimé</h2>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+
+        <section>
+            <div class="clickable-div" onclick="window.location='focus_ia.html'">Faire de Paris 8 un acteur majeur de l’IA éthique et responsable</div>
+            <div class="clickable-div" onclick="window.location='focus_ri.html'">Amplifier notre politique de relations internationales</div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="mb-5">
+            <h2 class="text-center mb-4">Contact</h2>
+            <p class="text-center">Pour nous contacter, envoyez un email à :</p>
+            <p class="text-center">
+                <a href="mailto:paris8enactes@gmail.com" class="btn btn-outline-danger">paris8enactes@gmail.com</a>
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-red text-white text-center py-3">
+        <p class="mb-0">&copy; 2024 Paris 8 en actes - Tous droits réservés</p>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
